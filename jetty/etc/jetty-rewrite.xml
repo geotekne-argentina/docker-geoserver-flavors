@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN"
+                   "http://www.eclipse.org/jetty/configure.dtd">
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+
+    <Get id="oldhandler" name="handler"/>
+
+    <Set name="handler">
+     <New id="Rewrite" class="org.eclipse.jetty.rewrite.handler.RewriteHandler">
+      <Set name="handler"><Ref id="oldhandler"/></Set>
+      <Set name="rewriteRequestURI">true</Set>
+      <Set name="rewritePathInfo">false</Set>
+      <Set name="originalPathAttribute">requestedPath</Set>
+
+      <!-- redirect from the welcome page to a specific page -->
+      <Call name="addRule">
+        <Arg>
+          <New class="org.eclipse.jetty.rewrite.handler.RedirectRegexRule">
+            <Set name="regex">^/$</Set>
+            <Set name="replacement">/geoserver/</Set>
+          </New>
+        </Arg>
+      </Call>
+     </New>
+    </Set>
+</Configure>
