@@ -13,7 +13,7 @@ El número de version de la imagen docker, indica la version de Geoserver inclui
 
 
 
-## Tabla de Sabores
+## Tabla de Sabores/Configuraciones
 
 | Flavor | Configuration                                                |
 | ------ | ------------------------------------------------------------ |
