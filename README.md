@@ -5,7 +5,7 @@ Simplemente, diferentes dockerizaciones de Geoserver según el tipo de configura
 
 Basamos la selección de nombres de los "sabores" en la siguiente imagen de referencia.
 
- <img src="./docs/images/flavors.jpg" alt="flavors" style="zoom: 50%;" />
+ <img src="./docs/images/flavors.jpg" alt="flavors" width="50%" />
 
 
 
@@ -13,7 +13,7 @@ El número de version de la imagen docker, indica la version de Geoserver inclui
 
 
 
-## Tabla de Sabores
+## Tabla de Sabores/Configuraciones
 
 | Flavor | Configuration                                                |
 | ------ | ------------------------------------------------------------ |
