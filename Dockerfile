@@ -1,4 +1,4 @@
-FROM geotekne/gdal:2.1.4
+FROM geotekne/gdal:2.1.4-alpine
 LABEL maintainer="geotekne.argentina@gmail.com"
 
 #

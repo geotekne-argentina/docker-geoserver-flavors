@@ -1,3 +1,3 @@
 #!/bin/bash
-docker build -t geotekne/geoserver-ginger:2.16.2 .
+docker build -t geotekne/geoserver:ginger-2.16.2 .
 
