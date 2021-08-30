@@ -41,7 +41,7 @@ RUN wget -c http://downloads.sourceforge.net/project/geoserver/GeoServer/$GEOSER
     wget -c https://www.geotekne.com.ar/files/geoserver-$GEOSERVER_VERSION/geoserver-$GEOSERVER_VERSION-jms-cluster-plugin.zip -O ~/jms.zip &&\
     unzip -o ~/jms.zip -d /opt/geoserver/webapps/geoserver/WEB-INF/lib/ &&\
     rm ~/jms.zip && \
-#Cgastrel Plugins
+# Plugins
     wget -c http://downloads.sourceforge.net/project/geoserver/GeoServer/$GEOSERVER_VERSION/extensions/geoserver-$GEOSERVER_VERSION-printing-plugin.zip -O ~/geoserver-printing-plugin.zip &&\
     unzip ~/geoserver-printing-plugin.zip -d /opt/geoserver/webapps/geoserver/WEB-INF/lib/ && \
     rm ~/geoserver-printing-plugin.zip && \
