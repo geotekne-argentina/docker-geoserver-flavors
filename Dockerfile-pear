@@ -1,0 +1,44 @@
+FROM openjdk:15-jdk-alpine3.11
+LABEL maintainer="geotekne.argentina@gmail.com"
+
+#
+# GEOSERVER DEPENDENCIES
+#
+RUN apk --update --no-cache add ttf-dejavu openssl pkgconfig 
+
+ENV GEOSERVER_VERSION 2.16.2
+ENV GEOSERVER_HOME /opt/geoserver
+ENV GEOSERVER_DATA_DIR /var/local/geoserver
+
+ENV PATH $JAVA_HOME/bin:$PATH
+ENV JAVA_OPTS "-server -Xms768m -Xmx1560m -XX:+UseParallelOldGC -XX:NewRatio=2" 
+
+#
+# GEOSERVER INSTALLATION
+#
+# Get Geoserver
+RUN wget -c http://downloads.sourceforge.net/project/geoserver/GeoServer/$GEOSERVER_VERSION/geoserver-$GEOSERVER_VERSION-bin.zip -O ~/geoserver.zip && \
+    unzip ~/geoserver.zip -d /opt && mv -v /opt/geoserver* /opt/geoserver && \
+    rm ~/geoserver.zip && \
+# Create data_dir and move Geoserver data_dir sample
+    mkdir $GEOSERVER_DATA_DIR && mv /opt/geoserver/data_dir/* $GEOSERVER_DATA_DIR && rm -rf /opt/geoserver/data_dir && \
+# Plugins
+    wget -c http://downloads.sourceforge.net/project/geoserver/GeoServer/$GEOSERVER_VERSION/extensions/geoserver-$GEOSERVER_VERSION-wps-plugin.zip -O ~/geoserver-wps-plugin.zip &&\
+    unzip -o ~/geoserver-wps-plugin.zip -d /opt/geoserver/webapps/geoserver/WEB-INF/lib/ && \
+    rm ~/geoserver-wps-plugin.zip && \
+    wget -c https://build.geoserver.org/geoserver/2.16.x/community-latest/geoserver-2.16-SNAPSHOT-mbtiles-plugin.zip -O ~/geoserver-mbtiles-plugin.zip &&\
+    unzip -o ~/geoserver-mbtiles-plugin.zip -d /opt/geoserver/webapps/geoserver/WEB-INF/lib/ && \
+    rm ~/geoserver-mbtiles-plugin.zip 
+
+# Configurations
+COPY ./jetty/bin/startup.sh $GEOSERVER_HOME/bin/
+RUN chmod 755 $GEOSERVER_HOME/bin/startup.sh
+
+COPY ./jetty/start.ini $GEOSERVER_HOME/
+COPY ./jetty/modules/rewrite.mod $GEOSERVER_HOME/modules/
+COPY ./jetty/lib/jetty-rewrite-9.4.18.v20190429.jar $GEOSERVER_HOME/lib/
+COPY ./jetty/etc/jetty-rewrite.xml $GEOSERVER_HOME/etc/
+
+# Expose GeoServer's default port
+EXPOSE 8080
+CMD ["/opt/geoserver/bin/startup.sh"]
