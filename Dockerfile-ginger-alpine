@@ -55,6 +55,11 @@ RUN wget -c http://downloads.sourceforge.net/project/geoserver/GeoServer/$GEOSER
     unzip -o ~/gs-sldservice-plugin.zip -d /opt/geoserver/webapps/geoserver/WEB-INF/lib/  &&\
     rm ~/gs-sldservice-plugin.zip
 
+# Workaround for GPKG issue in old Geoserver releases.
+# Overwrite sqlite-jdbc for Geoserver 2.16.2 (releases like 2.16.2 includes sqlite-jdbc with version previous to 3.31.1, which included Alpine support for the library)
+RUN wget -c https://repo1.maven.org/maven2/org/xerial/sqlite-jdbc/3.34.0/sqlite-jdbc-3.34.0.jar -O ~/sqlite-jdbc-3.34.0.jar &&\
+    rm /opt/geoserver/webapps/geoserver/WEB-INF/lib/sqlite-jdbc*.jar &&\
+    mv -f ~/sqlite-jdbc-3.34.0.jar /opt/geoserver/webapps/geoserver/WEB-INF/lib/
 
 # Configurations
 COPY ./jetty/bin/startup.sh $GEOSERVER_HOME/bin/
