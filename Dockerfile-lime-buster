@@ -1,11 +1,10 @@
-FROM kartoza/geoserver:2.16.2
+FROM kartoza/geoserver:2.20.4
 # TODO: improve resulting docker image size (since based on this initial setup, final size is about 1.9 GB. Too big)
 LABEL maintainer="geotekne.argentina@gmail.com"
-
 #
 # FONTS for OSM
 # 
-
-RUN apt-get update && apt -y install fonts-noto fonts-dejavu unifont fonts-hanazono
-
+USER root
+RUN apt update && apt -y install fonts-noto fonts-dejavu unifont fonts-hanazono
+USER 1001
 
