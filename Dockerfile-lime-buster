@@ -6,5 +6,3 @@ LABEL maintainer="geotekne.argentina@gmail.com"
 # 
 USER root
 RUN apt update && apt -y install fonts-noto fonts-dejavu unifont fonts-hanazono
-USER 1001
-
